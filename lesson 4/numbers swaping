@@ -1,0 +1,9 @@
+x = 5
+y = 9
+z = 1
+
+print(f"Original values: x = {x}, y = {y}, z = {z}")
+
+x, y, z = sorted([x, y, z])
+
+print(f"Updated values (ascending order): x = {x}, y = {y}, z = {z}")
