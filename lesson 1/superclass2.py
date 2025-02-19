@@ -1,11 +1,11 @@
 class Grandfather:
-  def __init__(self,fname,lname,age):
+  def __init__(self,fname,lname):
     self.firstname = fname
     self.lastname = lname
-    self.age = age
+    
 
   def printname(self):
-    print(self.firstname, self.lastname,self.age)
+    print(self.firstname, self.lastname)
 
 class Grandson(Grandfather):
   def __init__(self, fname, lname,age):
