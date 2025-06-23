@@ -1,0 +1,75 @@
+const calendar = document.getElementById("calendar");
+const monthName = document.getElementById("month-name");
+const daysContainer = document.getElementById("days-container");
+const prevMonthButton = document.getElementById("prev-month");
+const nextMonthButton = document.getElementById("next-month");
+
+let currentDate = new Date();
+let selectedDate = null;
+
+const renderCalendar = () => {
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+
+    // Set the month name
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthName.textContent = `${monthNames[month]} ${year}`;
+
+    // Get the first day of the month
+    const firstDay = new Date(year, month, 1).getDay();
+
+    // Get the number of days in the month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Clear previous days
+    daysContainer.innerHTML = "";
+
+    // Add empty cells for the previous month days
+    for (let i = 0; i < firstDay; i++) {
+        daysContainer.innerHTML += "<div class='day'></div>";
+    }
+
+    // Add the actual days
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement("div");
+        dayElement.classList.add("day");
+        dayElement.textContent = day;
+        dayElement.addEventListener("click", () => handleDateClick(day));
+
+        // Add events (this is just a sample event)
+        if (day === 5 || day === 10) {
+            const eventElement = document.createElement("div");
+            eventElement.classList.add("event");
+            eventElement.textContent = "Event";
+            dayElement.appendChild(eventElement);
+        }
+
+        daysContainer.appendChild(dayElement);
+    }
+};
+
+const handleDateClick = (day) => {
+    const selectedDayElement = document.querySelector(".selected");
+    if (selectedDayElement) {
+        selectedDayElement.classList.remove("selected");
+    }
+
+    selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const dayElements = document.querySelectorAll(".day");
+    dayElements[day - 1].classList.add("selected");
+
+    alert(`You selected ${selectedDate.toDateString()}`);
+};
+
+prevMonthButton.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+});
+
+nextMonthButton.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+});
+
+// Initial render
+renderCalendar();
